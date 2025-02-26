@@ -43,10 +43,17 @@ io.on('connection', (socket) => {
     // Handle direct messages
     socket.on('direct_message', (data) => {
         const recipientSocketId = users.get(data.recipient);
+        
+        // Send message to the recipient
         if (recipientSocketId) {
-            // Send message only to the recipient
             io.to(recipientSocketId).emit('receive_message', {
                 sender: socket.username,
+                content: data.content,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Send confirmation back to sender to display their own message
+            socket.emit('message_sent', {
                 content: data.content,
                 timestamp: new Date().toISOString()
             });
