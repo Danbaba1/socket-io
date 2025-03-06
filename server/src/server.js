@@ -1,50 +1,52 @@
-// server.js
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const cors = require('cors');
+
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http, {
+const server = http.createServer(app);
+const io = new Server(server, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: "*", // More restrictive in production
+        methods: ["GET", "POST"],
+        allowedHeaders: ["*"],
+        credentials: true
     }
 });
 
-// Store connected users
-const users = new Map(); // Maps username to socket.id
+// Middleware
+app.use(cors({
+    origin: '*', // Adjust in production
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.use(express.json());
 
-// Serve static files
-app.use(express.static('public'));
+// Users storage
+const users = new Map();
 
+// Socket.IO connection handling
 io.on('connection', (socket) => {
     console.log('New client connected:', socket.id);
 
-    // Handle user registration
+    // User registration
     socket.on('register', (username) => {
-        console.log('Register event received with username:', username);
-        // Check if username is already taken
         if (Array.from(users.keys()).includes(username)) {
             socket.emit('registration_error', 'Username already taken');
             return;
         }
 
-        // Store user
         users.set(username, socket.id);
         socket.username = username;
 
-        // Confirm registration
         socket.emit('registration_success', username);
-
-        // Broadcast updated user list to all clients
         io.emit('user_list', Array.from(users.keys()));
-
-        console.log(`${username} registered with socket ${socket.id}`);
     });
 
-    // Handle direct messages
+    // Direct messaging
     socket.on('direct_message', (data) => {
         const recipientSocketId = users.get(data.recipient);
         
-        // Send message to the recipient
         if (recipientSocketId) {
             io.to(recipientSocketId).emit('receive_message', {
                 sender: socket.username,
@@ -52,29 +54,27 @@ io.on('connection', (socket) => {
                 timestamp: new Date().toISOString()
             });
             
-            // Send confirmation back to sender to display their own message
             socket.emit('message_sent', {
                 content: data.content,
                 timestamp: new Date().toISOString()
             });
         } else {
-            // Notify sender that recipient is not available
             socket.emit('message_error', `User ${data.recipient} is not available`);
         }
     });
 
-    // Handle disconnection
+    // Disconnection handling
     socket.on('disconnect', () => {
         if (socket.username) {
             users.delete(socket.username);
-            // Broadcast updated user list
             io.emit('user_list', Array.from(users.keys()));
-            console.log(`${socket.username} disconnected`);
         }
+        console.log('Client disconnected:', socket.id);
     });
 });
 
+// Start server
 const PORT = process.env.PORT || 3000;
-http.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

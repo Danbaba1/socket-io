@@ -13,95 +13,105 @@ A real-time direct messaging web application built with Socket.IO, Express, and 
 
 ## Prerequisites
 
-* Node.js (v12.0.0 or higher recommended)
+* Node.js (v14 or higher recommended)
 * npm (Node Package Manager)
-
-## Installation
-
-1. Clone the repository or download the source code:
-
-```bash
-git clone <repository-url>
-cd socket-io-direct-message-chat
-```
-
-2. Install the dependencies:
-
-```bash
-npm install
-```
-
-3. Set up the project structure:
-
-```bash
-# Create a server.js file (copy the server code from the repository)
-touch server.js
-
-# Create an index.html file in the root directory (copy the HTML code from the repository)
-touch index.html
-```
-
-## Running the Application
-
-1. Start the server:
-
-```bash
-node server.js
-```
-
-2. The application will be available at `http://localhost:3000` (or the port specified in your environment variables).
-
-3. To test the chat functionality:
-   - Open multiple browser windows or tabs pointing to `http://localhost:3000`
-   - Register with different usernames in each window
-   - Select a user from the online users list to start a conversation
-   - Type messages to see real-time communication between users
 
 ## Project Structure
 
 ```
 socket-io-direct-message-chat/
-├── index.html        # Client-side HTML file (will be served automatically)
-├── server.js         # Server-side application logic
-├── package.json      # Project dependencies
+├── client/           # Client-side application
+│   ├── public/
+│   │   ├── index.html
+│   │   ├── styles.css
+│   │   └── client.js
+│   └── package.json
+│
+├── server/           # Server-side application
+│   ├── src/
+│   │   └── server.js
+│   └── package.json
+│
 └── README.md         # This file
 ```
 
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Danbaba1/socket-io
+cd socket-io
+```
+
+2. Install dependencies for both client and server:
+
+```bash
+# Install server dependencies
+cd server
+npm install
+
+# Install client dependencies
+cd ../client
+npm install
+```
+
+## Running the Application
+
+### Start the Server
+
+```bash
+# From the server directory
+cd server
+npm run dev  # For development with nodemon
+# or
+npm start    # For production
+```
+
+### Start the Client
+
+```bash
+# From the client directory
+cd client
+npm run dev  # Starts the client with http-server
+# or
+npm start    # Starts the client in production mode
+```
+
+After starting both server and client, access the application at:
+```
+http://localhost:8080/index.html
+```
+
+## Configuration
+
+### Server Configuration
+- Configure CORS settings in `server/src/server.js`
+- Set environment variables for port and other settings
+
+### Client Configuration
+- Update server connection URL in `client/public/client.js` if needed
+- Modify `styles.css` for custom styling
+
 ## How It Works
 
-### Server-Side (server.js)
-* Sets up an Express server with Socket.IO integration
+### Server-Side
+* Express and Socket.IO server
 * Manages user connections and registrations
-* Handles direct message routing between users
-* Maintains a list of active users
-* Broadcasts user list updates to all clients
+* Handles direct message routing
+* Maintains active users list
+* Broadcasts user list updates
 
-### Client-Side (index.html)
-* Provides a user interface for registration and messaging
-* Connects to the Socket.IO server
-* Displays online users
-* Allows selection of a user to chat with
-* Sends and receives direct messages in real-time
+### Client-Side
+* Responsive web interface
+* Socket.IO client connection
+* User registration
+* Online users display
+* Real-time direct messaging
 
-## Usage
+## Deployment
 
-1. Open the application in your browser
-2. Enter a username and click "Register"
-3. Select a user from the online users list
-4. Type a message and click "Send"
-5. Messages will appear instantly for both sender and recipient
-
-## Customization
-
-You can modify the application by:
-* Editing the CSS styles in index.html to change the appearance
-* Adding additional features to the server.js file
-* Extending the client-side JavaScript in index.html
-
-## Troubleshooting
-
-* If the server fails to start, ensure no other application is using port 3000
-* If messages aren't being delivered, check the browser console for error messages
-* Ensure all users have unique usernames
-* Make sure you have the latest version of Socket.IO installed
-* If you encounter CORS issues, verify the CORS configuration in server.js
+### Local Development
+1. Start the server
+2. Start the client
+3. Access the application at `http://localhost:8080/index.html

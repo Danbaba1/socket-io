@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Direct Message Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="chat-container">
+        <div id="username-container">
+            <input type="text" id="username-input" placeholder="Choose username" />
+            <button id="register-btn">Register</button>
+        </div>
+        
+        <div id="chat-area" class="hidden">
+            <div class="main-content">
+                <div id="user-list">
+                    <h3>Online Users</h3>
+                    <div id="users"></div>
+                </div>
+                
+                <div id="chat-content">
+                    <div id="chat-header">
+                        <h3>
+                            Chat with: <span id="selected-user">No one selected</span>
+                        </h3>
+                    </div>
+                    <div id="messages"></div>
+                    <form id="message-form">
+                        <input
+                            type="text"
+                            id="message-input"
+                            placeholder="Type a message..."
+                            required
+                        />
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
