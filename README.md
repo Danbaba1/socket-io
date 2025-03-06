@@ -1,9 +1,7 @@
 # Socket.IO Direct Message Chat
-
 A real-time direct messaging web application built with Socket.IO, Express, and Node.js. This application allows users to register with a username and exchange private messages with other online users.
 
 ## Features
-
 * User registration with unique username validation
 * Real-time user presence (online users list)
 * Private direct messaging between users
@@ -36,6 +34,11 @@ socket-io-direct-message-chat/
 ```
 
 ## Installation
+1. Create a new folder for your application:
+```bash
+mkdir socket-app
+cd socket-app
+```
 
 1. Clone the repository:
 
