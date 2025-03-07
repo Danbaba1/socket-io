@@ -1,5 +1,5 @@
-# Socket.IO Direct Message Chat
-A real-time direct messaging web application built with Socket.IO, Express, and Node.js. This application allows users to register with a username and exchange private messages with other online users.
+# TypeScript Socket.IO Direct Message Chat
+A real-time direct messaging web application built with Socket.IO, Express, TypeScript, and Node.js. This application allows users to register with a username and exchange private messages with other online users, with the added benefits of type safety.
 
 ## Features
 * User registration with unique username validation
@@ -8,29 +8,35 @@ A real-time direct messaging web application built with Socket.IO, Express, and 
 * Instant message delivery with Socket.IO
 * Responsive design that works on desktop and mobile devices
 * Simple and intuitive user interface
+* TypeScript type definitions for safer code
+* Interfaces for message and socket objects
 
 ## Prerequisites
 
 * Node.js (v14 or higher recommended)
 * npm (Node Package Manager)
+* TypeScript knowledge
 
 ## Project Structure
 
 ```
 socket-io-direct-message-chat/
-├── client/           # Client-side application
+├── client/              # Client-side application
 │   ├── public/
 │   │   ├── index.html
 │   │   ├── styles.css
 │   │   └── client.js
 │   └── package.json
 │
-├── server/           # Server-side application
+├── server/              # Server-side TypeScript application
 │   ├── src/
+│   │   └── server.ts    # TypeScript source file
+│   ├── dist/            # Compiled JavaScript
 │   │   └── server.js
-│   └── package.json
+│   ├── package.json
+│   └── tsconfig.json    # TypeScript configuration
 │
-└── README.md         # This file
+└── README.md            # This file
 ```
 
 ## Installation
@@ -40,14 +46,14 @@ mkdir socket-app
 cd socket-app
 ```
 
-1. Clone the repository:
+2. Clone the repository:
 
 ```bash
 git clone https://github.com/Danbaba1/socket-io
 cd socket-io
 ```
 
-2. Install dependencies for both client and server:
+3. Install dependencies for both client and server:
 
 ```bash
 # Install server dependencies
@@ -66,9 +72,10 @@ npm install
 ```bash
 # From the server directory
 cd server
-npm run dev  # For development with nodemon
+npm run build  # Compile TypeScript to JavaScript
+npm run dev    # For development with ts-node-dev
 # or
-npm start    # For production
+npm start      # For production (runs compiled JS)
 ```
 
 ### Start the Client
@@ -76,9 +83,9 @@ npm start    # For production
 ```bash
 # From the client directory
 cd client
-npm run dev  # Starts the client with http-server
+npm run dev    # Starts the client with http-server
 # or
-npm start    # Starts the client in production mode
+npm start      # Starts the client in production mode
 ```
 
 After starting both server and client, access the application at:
@@ -88,8 +95,12 @@ http://localhost:8080/index.html
 
 ## Configuration
 
+### TypeScript Configuration
+- The server uses TypeScript with configuration in `tsconfig.json`
+- Type definitions for Socket.IO, Express, and custom interfaces
+
 ### Server Configuration
-- Configure CORS settings in `server/src/server.js`
+- Configure CORS settings in `server/src/server.ts`
 - Set environment variables for port and other settings
 
 ### Client Configuration
@@ -99,7 +110,8 @@ http://localhost:8080/index.html
 ## How It Works
 
 ### Server-Side
-* Express and Socket.IO server
+* Express and Socket.IO server with TypeScript
+* Strongly typed interfaces for messages and socket extensions
 * Manages user connections and registrations
 * Handles direct message routing
 * Maintains active users list
@@ -115,6 +127,12 @@ http://localhost:8080/index.html
 ## Deployment
 
 ### Local Development
-1. Start the server
+1. Build and start the TypeScript server
 2. Start the client
-3. Access the application at `http://localhost:8080/index.html
+3. Access the application at `http://localhost:8080/index.html`
+
+## Type Definitions
+The server implementation includes TypeScript interfaces for:
+- Extended Socket interface with username property
+- Direct message data structure
+- Message response payloads

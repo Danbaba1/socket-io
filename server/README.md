@@ -1,20 +1,26 @@
-# Socket.IO Chat Server
+# TypeScript Socket.IO Chat Server
 
 ## Overview
-A real-time direct messaging server built with Express, Socket.IO, and Node.js, supporting user registration and direct messaging.
+A real-time direct messaging server built with Express, Socket.IO, and TypeScript, supporting user registration and direct messaging with type safety.
 
 ## Prerequisites
 - Node.js (v14 or later)
 - npm (Node Package Manager)
+- TypeScript knowledge
 
 ## Project Structure
 ```
 socket-chat-server/
 │
 ├── src/
-│   └── server.js
+│   └── server.ts
 │
-└── package.json
+├── dist/
+│   └── server.js (compiled)
+│
+├── package.json
+│
+└── tsconfig.json
 ```
 
 ## Features
@@ -23,6 +29,8 @@ socket-chat-server/
 - Online user list management
 - CORS support
 - Error handling for message and registration events
+- Type safety with TypeScript
+- Properly defined interfaces for messages and socket extensions
 
 ## Installation
 
@@ -42,14 +50,21 @@ npm install
 ### Environment Variables
 - `PORT`: Specify a custom port (defaults to 3000)
 
+### TypeScript Configuration
+The project includes a `tsconfig.json` file with the following key settings:
+- Target: ES2020
+- Module: CommonJS
+- Strict type checking enabled
+- Output directory: ./dist
+
 ### CORS Configuration
 The current configuration allows all origins (`*`). For production:
-- Modify `cors` middleware in `server.js`
+- Modify `cors` middleware in `server.ts`
 - Set specific allowed origins
 - Restrict methods and headers
 
 Example production configuration:
-```javascript
+```typescript
 cors: {
     origin: 'https://yourdomain.com',
     methods: ['GET', 'POST'],
@@ -59,17 +74,23 @@ cors: {
 
 ## Running the Application
 
+### Build
+```bash
+npm run build
+```
+Compiles TypeScript to JavaScript in the `dist` directory.
+
 ### Development Mode
 ```bash
 npm run dev
 ```
-Uses `nodemon` for automatic server restart on file changes.
+Uses `ts-node-dev` for automatic server restart on file changes.
 
 ### Production Mode
 ```bash
 npm start
 ```
-Runs the server using Node.js.
+Runs the compiled JavaScript from the `dist` directory.
 
 ## Server Endpoints
 - WebSocket connection at `http://localhost:3000`
@@ -92,6 +113,12 @@ Runs the server using Node.js.
 - `message_sent`: Confirmation of sent message
 - `message_error`: Message delivery failure
 
+## Type Definitions
+The server includes TypeScript interfaces for:
+- Extended Socket with username
+- Message data structures
+- Response payloads
+
 ## Security Considerations
 - Implement rate limiting
 - Add authentication
@@ -108,8 +135,10 @@ Runs the server using Node.js.
 - Express
 - Socket.IO
 - CORS
+- TypeScript and related type definitions
 
 ## Troubleshooting
 - Ensure client and server are on compatible Socket.IO versions
 - Check network configurations
 - Verify CORS settings
+- Check TypeScript compilation errors
