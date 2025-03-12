@@ -1,4 +1,5 @@
 # TypeScript Socket.IO Direct Message Chat
+
 A real-time direct messaging web application built with Socket.IO, Express, TypeScript, and Node.js. This application allows users to register with a username and exchange private messages with other online users, with the added benefits of type safety.
 
 ## Features
@@ -9,7 +10,7 @@ A real-time direct messaging web application built with Socket.IO, Express, Type
 * Responsive design that works on desktop and mobile devices
 * Simple and intuitive user interface
 * TypeScript type definitions for safer code
-* Interfaces for message and socket objects
+* Modular code structure with separation of concerns
 
 ## Prerequisites
 
@@ -30,7 +31,11 @@ socket-io-direct-message-chat/
 │
 ├── server/              # Server-side TypeScript application
 │   ├── src/
-│   │   └── server.ts    # TypeScript source file
+│   │   ├── server.ts              # Main server setup
+│   │   └── api-chat/              # Socket.IO module
+│   │       ├── interfaces.ts      # TypeScript interfaces
+│   │       ├── socketHandlers.ts  # Socket event handlers
+│   │       └── userStore.ts       # User management
 │   ├── dist/            # Compiled JavaScript
 │   │   └── server.js
 │   ├── package.json
@@ -40,6 +45,7 @@ socket-io-direct-message-chat/
 ```
 
 ## Installation
+
 1. Create a new folder for your application:
 ```bash
 mkdir socket-app
@@ -57,11 +63,11 @@ cd socket-io
 
 ```bash
 # Install server dependencies
-cd server
+cd @server
 npm install
 
 # Install client dependencies
-cd ../client
+cd ../@client
 npm install
 ```
 
@@ -90,7 +96,7 @@ npm start      # Starts the client in production mode
 
 After starting both server and client, access the application at:
 ```
-http://localhost:8080/index.html
+http://localhost:3000
 ```
 
 ## Configuration
@@ -102,6 +108,7 @@ http://localhost:8080/index.html
 ### Server Configuration
 - Configure CORS settings in `server/src/server.ts`
 - Set environment variables for port and other settings
+- Static file serving from client's public directory
 
 ### Client Configuration
 - Update server connection URL in `client/public/client.js` if needed
@@ -111,8 +118,12 @@ http://localhost:8080/index.html
 
 ### Server-Side
 * Express and Socket.IO server with TypeScript
+* Modular architecture with separation of concerns:
+  * Main server setup in server.ts
+  * Socket handlers in api-chat/socketHandlers.ts
+  * User management in api-chat/userStore.ts
+  * Interfaces in api-chat/interfaces.ts
 * Strongly typed interfaces for messages and socket extensions
-* Manages user connections and registrations
 * Handles direct message routing
 * Maintains active users list
 * Broadcasts user list updates
@@ -129,10 +140,4 @@ http://localhost:8080/index.html
 ### Local Development
 1. Build and start the TypeScript server
 2. Start the client
-3. Access the application at `http://localhost:8080/index.html`
-
-## Type Definitions
-The server implementation includes TypeScript interfaces for:
-- Extended Socket interface with username property
-- Direct message data structure
-- Message response payloads
+3. Access the application at `http://localhost:3000` 

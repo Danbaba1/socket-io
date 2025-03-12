@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Connect to the server with more explicit options
-    const socket = io('http://localhost:3000', {
+    const socket = io('http://localhost:8080', {
         transports: ['websocket'], // Force websocket
         reconnection: true,
         reconnectionAttempts: 5,
