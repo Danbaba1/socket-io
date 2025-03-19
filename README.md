@@ -17,32 +17,7 @@ A real-time direct messaging web application built with Socket.IO, Express, Type
 * Node.js (v14 or higher recommended)
 * npm (Node Package Manager)
 * TypeScript knowledge
-
-## Project Structure
-
-```
-socket-io-direct-message-chat/
-├── client/              # Client-side application
-│   ├── public/
-│   │   ├── index.html
-│   │   ├── styles.css
-│   │   └── client.js
-│   └── package.json
-│
-├── server/              # Server-side TypeScript application
-│   ├── src/
-│   │   ├── server.ts              # Main server setup
-│   │   └── api-chat/              # Socket.IO module
-│   │       ├── interfaces.ts      # TypeScript interfaces
-│   │       ├── socketHandlers.ts  # Socket event handlers
-│   │       └── userStore.ts       # User management
-│   ├── dist/            # Compiled JavaScript
-│   │   └── server.js
-│   ├── package.json
-│   └── tsconfig.json    # TypeScript configuration
-│
-└── README.md            # This file
-```
+* Environment variables setup (.env file)
 
 ## Installation
 
@@ -63,12 +38,25 @@ cd socket-io
 
 ```bash
 # Install server dependencies
-cd @server
+cd "@server"
 npm install
 
 # Install client dependencies
-cd ../@client
+cd "../@client"
 npm install
+```
+
+4. Install required packages:
+```bash
+# In the server directory
+npm install dotenv
+```
+
+5. Create a `.env` file in the @server directory:
+```
+PORT=8080
+CLIENT_APP_PORT=3000
+CLIENT_APP_URL=http://localhost:3000
 ```
 
 ## Running the Application
@@ -76,10 +64,9 @@ npm install
 ### Start the Server
 
 ```bash
-# From the server directory
-cd server
-npm run build  # Compile TypeScript to JavaScript
-npm run dev    # For development with ts-node-dev
+# From the @server directory
+cd "@server"
+npm run dev    # For development with nodemon and ts-node
 # or
 npm start      # For production (runs compiled JS)
 ```
@@ -87,9 +74,9 @@ npm start      # For production (runs compiled JS)
 ### Start the Client
 
 ```bash
-# From the client directory
-cd client
-npm run dev    # Starts the client with http-server
+# From the @client directory
+cd "@client"
+npm run dev    # Starts the client development server
 # or
 npm start      # Starts the client in production mode
 ```
@@ -99,45 +86,3 @@ After starting both server and client, access the application at:
 http://localhost:3000
 ```
 
-## Configuration
-
-### TypeScript Configuration
-- The server uses TypeScript with configuration in `tsconfig.json`
-- Type definitions for Socket.IO, Express, and custom interfaces
-
-### Server Configuration
-- Configure CORS settings in `server/src/server.ts`
-- Set environment variables for port and other settings
-- Static file serving from client's public directory
-
-### Client Configuration
-- Update server connection URL in `client/public/client.js` if needed
-- Modify `styles.css` for custom styling
-
-## How It Works
-
-### Server-Side
-* Express and Socket.IO server with TypeScript
-* Modular architecture with separation of concerns:
-  * Main server setup in server.ts
-  * Socket handlers in api-chat/socketHandlers.ts
-  * User management in api-chat/userStore.ts
-  * Interfaces in api-chat/interfaces.ts
-* Strongly typed interfaces for messages and socket extensions
-* Handles direct message routing
-* Maintains active users list
-* Broadcasts user list updates
-
-### Client-Side
-* Responsive web interface
-* Socket.IO client connection
-* User registration
-* Online users display
-* Real-time direct messaging
-
-## Deployment
-
-### Local Development
-1. Build and start the TypeScript server
-2. Start the client
-3. Access the application at `http://localhost:3000` 
