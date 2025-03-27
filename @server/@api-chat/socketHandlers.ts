@@ -1,10 +1,15 @@
-// src/api-chat/socketHandlers.ts
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { SocketWithUsername, DirectMessageData, MessageResponse } from './interfaces';
 import { UserStore } from './userStore';
 
 export function setupSocketHandlers(io: Server): void {
-  io.on('connection', (socket: SocketWithUsername) => {
+  // Type assertion to access methods safely
+  const socketServer = io as Server & {
+    on(event: 'connection', callback: (socket: Socket) => void): void;
+    emit(event: string, ...args: any[]): void;
+  };
+
+  socketServer.on('connection', (socket: Socket & SocketWithUsername) => {
     console.log('New client connected:', socket.id);
     
     // User registration
@@ -15,10 +20,10 @@ export function setupSocketHandlers(io: Server): void {
       }
       
       UserStore.addUser(username, socket.id);
-      socket.username = username;
+      (socket as SocketWithUsername).username = username;
       
       socket.emit('registration_success', username);
-      io.emit('user_list', UserStore.getAllUsernames());
+      socketServer.emit('user_list', UserStore.getAllUsernames());
     });
     
     // Direct messaging
@@ -26,8 +31,8 @@ export function setupSocketHandlers(io: Server): void {
       const recipientSocketId = UserStore.getSocketId(data.recipient);
       
       if (recipientSocketId) {
-        io.to(recipientSocketId).emit('receive_message', {
-          sender: socket.username,
+        socketServer.to(recipientSocketId).emit('receive_message', {
+          sender: (socket as SocketWithUsername).username,
           content: data.content,
           timestamp: new Date().toISOString()
         } as MessageResponse);
@@ -43,9 +48,10 @@ export function setupSocketHandlers(io: Server): void {
     
     // Disconnection handling
     socket.on('disconnect', () => {
-      if (socket.username) {
-        UserStore.removeUser(socket.username);
-        io.emit('user_list', UserStore.getAllUsernames());
+      const username = (socket as SocketWithUsername).username;
+      if (username) {
+        UserStore.removeUser(username);
+        socketServer.emit('user_list', UserStore.getAllUsernames());
       }
       console.log('Client disconnected:', socket.id);
     });
