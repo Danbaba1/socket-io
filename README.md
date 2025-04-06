@@ -8,6 +8,8 @@ A real-time direct messaging web application built with Socket.IO, Express, Type
 * Real-time user presence tracking
 * Private direct messaging between users
 * Instant message delivery using Socket.IO
+* Message typing indicators
+* User authentication with JWT
 * Responsive design compatible with desktop and mobile devices
 * Clean and intuitive user interface
 * Strong TypeScript type definitions
@@ -22,19 +24,13 @@ A real-time direct messaging web application built with Socket.IO, Express, Type
 
 ## Installation Steps
 
-1. Create project directory:
+1. Clone the repository:
 ```bash
-mkdir socket-app
-cd socket-app
-```
-
-2. Clone the repository:
-```bash
-git clone https://github.com/Danbaba1/socket-io
+git clone https://github.com/Danbaba1/socket-io.git
 cd socket-io
 ```
 
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 # Install server dependencies
 cd "@server"
@@ -45,12 +41,13 @@ cd "../@client"
 npm install
 ```
 
-4. Create environment configuration:
-* In the `@server` directory, create a `.env` file with the following content:
+3. Create environment configuration:
+* In the `@server` directory, create a `.env` file based on the provided `.env.example`:
 ```
 PORT=8080
 CLIENT_APP_PORT=3000
 CLIENT_APP_URL=http://localhost:3000
+JWT_SECRET=your_jwt_secret_key
 ```
 
 ## Running the Application
@@ -65,7 +62,7 @@ npm run dev
 ### Start the Client
 ```bash
 # From the @client directory
-cd "@client"
+cd "../@client"
 npm run dev
 ```
 
