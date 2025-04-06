@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 
 export enum UserRole {
-  Admin = 'admin',
   User = 'user',
 }
 
 export interface UserDocument extends mongoose.Document {
   _id: mongoose.Types.ObjectId;
   email: string;
+  username: string;
   email_verified: boolean;
   password: string;
   role: UserRole;
@@ -19,22 +19,33 @@ export interface UserDocument extends mongoose.Document {
 const collectionName = 'user';
 
 const UserSchema = new mongoose.Schema({
-  email: {type: String, required: true, unique: true,
+  email: {
+    type: String, 
+    required: true, 
+    unique: true,
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "please provide valid email",
     ]
   },
-  email_verified: { type: Boolean, required:true, default: false},
+  username: { 
+    type: String, 
+    required: true, 
+    unique: true,
+    trim: true,
+    minlength: [3, 'Username must be at least 3 characters long'],
+    maxlength: [20, 'Username cannot exceed 20 characters']
+  },
+  email_verified: { type: Boolean, required: true, default: false },
   password: { type: String, required: true },
-  role: { type: String, required: true, default: UserRole.User}
+  role: { type: String, required: true, default: UserRole.User }
 },
 {
   timestamps: true,
 });
 
 UserSchema.pre('save', async function(next){
-  // Only run this function if password was moddified (not on other update functions)
+  // Only run this function if password was modified (not on other update functions)
   if (!this.isModified("password")){
     return next();
   }
@@ -42,8 +53,8 @@ UserSchema.pre('save', async function(next){
   this.password = await bcrypt.hash(this.password, salt);
 
   return next();
-})
+});
 
-const UserModel = mongoose.model<UserDocument>(collectionName, UserSchema, collectionName); //declare collection name a second time to prevent mongoose from pluralizing or adding 's' to the collection name
+const UserModel = mongoose.model<UserDocument>(collectionName, UserSchema, collectionName);
 
 export { UserModel };

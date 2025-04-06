@@ -1,8 +1,8 @@
 import {Application} from 'express';
 import passport from 'passport';
-import { localLoginStrategy } from '../passport/strategies/local.login.strategy';
-import { localSignupStrategy } from '../passport/strategies/local.signup.strategy';
-import { jwtStrategy } from '../passport/strategies/jwt.strategy';
+import { localLoginStrategy } from '../passport/strategies/local.login.strategy.js';
+import { localSignupStrategy } from '../passport/strategies/local.signup.strategy.js';
+import { jwtStrategy } from '../passport/strategies/jwt.strategy.js';
 
 
 

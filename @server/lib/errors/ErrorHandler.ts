@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import { CustomErrorInterface, HttpCode } from '../errors/CustomError';
-import { error } from '../helpers';
+import { CustomErrorInterface, HttpCode } from '../errors/CustomError.js';
+import { error } from '../helpers/index.js';
 
 class ErrorHandler {
 

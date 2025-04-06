@@ -1,8 +1,7 @@
 import {Strategy} from 'passport-local';
-import { UserModel as User } from '../../../@api-user/user.model';
+import { UserModel as User } from '../../../@api-user/user.model.js';
 import bcrypt from 'bcrypt'
-import { badRequestErr } from '../../../lib/errors/Errors';
-import { success } from '../../../lib/helpers';
+import { success } from '../../../lib/helpers/index.js';
 
 export const localLoginStrategy = new Strategy(
   {

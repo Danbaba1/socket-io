@@ -1,31 +1,46 @@
 // src/api-chat/userStore.ts
 
-// Users storage - Map of username to socket ID
-const users: Map<string, string> = new Map();
+interface UserData {
+  socketId: string;
+  username?: string;
+}
+
+// Users storage - Map of userId to socket ID and user data
+const users: Map<string, UserData> = new Map();
 
 export const UserStore = {
   // Add a user
-  addUser(username: string, socketId: string): void {
-    users.set(username, socketId);
+  addUser(userId: string, socketId: string, username?: string): void {
+    users.set(userId, { socketId, username });
   },
 
   // Remove a user
-  removeUser(username: string): void {
-    users.delete(username);
+  removeUser(userId: string): void {
+    users.delete(userId);
   },
 
-  // Check if username exists
-  userExists(username: string): boolean {
-    return users.has(username);
+  // Check if user exists
+  userExists(userId: string): boolean {
+    return users.has(userId);
   },
 
-  // Get socket ID by username
-  getSocketId(username: string): string | undefined {
-    return users.get(username);
+  // Get socket ID by userId
+  getSocketId(userId: string): string | undefined {
+    const userData = users.get(userId);
+    return userData ? userData.socketId : undefined;
   },
 
-  // Get all usernames
-  getAllUsernames(): string[] {
-    return Array.from(users.keys());
+  // Add to UserStore object in userStore.ts
+  getUsername(userId: string): string | undefined {
+    const userData = users.get(userId);
+    return userData ? userData.username : undefined;
+  },
+
+  // Get all users with their data
+  getAllUsers(): Array<{ id: string, username?: string }> {
+    return Array.from(users.entries()).map(([userId, userData]) => ({
+      id: userId,
+      username: userData.username
+    }));
   }
 };

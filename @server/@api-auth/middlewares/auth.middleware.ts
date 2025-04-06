@@ -1,9 +1,9 @@
 import { NextFunction, Response } from "express";
 import passport from 'passport';
 import { Types } from 'mongoose';
-import { Payload, ReqUser } from '../../types';
-import { UserRole } from "../../@api-user/user.model";
-import { unAuthorizedErr } from '../../lib/errors/Errors';
+import { Payload, ReqUser } from '../../types/index.js';
+import { UserRole } from "../../@api-user/user.model.js";
+import { unAuthorizedErr } from '../../lib/errors/Errors.js';
 
 // -----------------------------------------------------------------------------------------------------------//
 // https://www.sailpoint.com/identity-library/difference-between-authentication-and-authorization/
@@ -32,6 +32,7 @@ export const authenticateUserWithJWT = (req: ReqUser, res: Response, next: NextF
         req.user = { 
           _id, 
           email: payload.email, 
+          username: payload.username,
           role: payload.role 
         };
         return next();

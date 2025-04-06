@@ -1,4 +1,4 @@
-import { CustomError, HttpCode } from '../errors/CustomError';
+import { CustomError, HttpCode } from '../errors/CustomError.js';
 
 // --- Error Classes ---
 class NotFoundError extends CustomError {

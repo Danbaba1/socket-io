@@ -1,6 +1,6 @@
 import {ExtractJwt, Strategy} from 'passport-jwt';
 import { DoneCallback } from 'passport';
-import { Payload } from '../../../types';
+import { Payload } from '../../../types/index.js';
 
 import dotenv from 'dotenv';
 dotenv.config();

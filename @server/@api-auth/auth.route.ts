@@ -2,7 +2,7 @@ import express, { IRouter } from 'express';
 import {
   signupWithLocalController,
   loginWithLocalController,
-} from './auth.controller';
+} from '../@api-auth/auth.controller.js';
 
 const router: IRouter = express.Router();
 

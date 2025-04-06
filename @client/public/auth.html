@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat App - Authentication</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <div id="auth-container">
+      <div class="auth-header">
+        <h2 id="auth-title">Login</h2>
+        <div class="auth-toggle">
+          <button id="login-tab" class="active-tab">Login</button>
+          <button id="register-tab">Register</button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <div class="password-field">
+            <input type="password" id="login-password" placeholder="Enter your password" required />
+            <span class="password-toggle" id="login-toggle">
+              <i class="fa-regular fa-eye-slash" id="login-eye"></i>
+            </span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="primary-btn">Login</button>
+        </div>
+        <div class="auth-message" id="login-message"></div>
+      </form>
+
+      <!-- Registration Form -->
+      <form id="register-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="register-username">Username</label>
+          <input type="text" id="register-username" placeholder="Choose a username" required />
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <div class="password-field">
+            <input type="password" id="register-password" placeholder="Create a password" required />
+            <span class="password-toggle" id="register-toggle">
+              <i class="fa-regular fa-eye-slash" id="register-eye"></i>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="register-confirm-password">Confirm Password</label>
+          <div class="password-field">
+            <input type="password" id="register-confirm-password" placeholder="Confirm your password" required />
+            <span class="password-toggle" id="register-confirm-toggle">
+              <i class="fa-regular fa-eye-slash" id="register-confirm-eye"></i>
+            </span>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="primary-btn">Register</button>
+        </div>
+        <div class="auth-message" id="register-message"></div>
+      </form>
+    </div>
+
+    <script src="auth.js"></script>
+  </body>
+</html>

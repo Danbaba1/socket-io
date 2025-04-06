@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import chalk from 'chalk';
 import { fileURLToPath } from 'url';
+import { Types } from 'mongoose';
 
 // Get the directory name using import.meta.url
 const __filename = fileURLToPath(import.meta.url);

@@ -1,11 +1,5 @@
-import { badRequestErr, notFoundErr } from '../lib/errors/Errors';
-import { UserDocument, UserModel as User, UserRole } from '../@api-user/user.model';
-
-
-export const getAllUsersService = async () => {
-  const query = await User.find({role:{$ne: UserRole.Admin}}).exec();
-  return query;
-};
+import { badRequestErr, notFoundErr } from '../lib/errors/Errors.js';
+import { UserDocument, UserModel as User, } from '../@api-user/user.model.js';
 
 export const getOneUserService = async (paramsId: string) => {
   const query = await User.findById(paramsId).exec();
@@ -52,22 +46,4 @@ export const updateUserPropertyValuesService = async (paramsId: string, requestB
   return updatedQuery;
 };
 
-export const createAdminUserService = async () => {
-  let adminUser = await User.findOne({ role: UserRole.Admin }).exec();
-  if (!adminUser) {
-    const createAdminUser = new User({
-      email: "admin@admin.com",
-      password: "admin",
-      role: UserRole.Admin,
-    }); 
-    adminUser = await createAdminUser.save();
-  }
-  return adminUser;
-};
-
-//--------------------------------------------------------------------------------------------------//
-export const deleteAllUserService = async () => {
-  const query = await User.deleteMany({role:{$ne: UserRole.Admin}}).exec();
-  return query;
-}
 //--------------------------------------------------------------------------------------------------//

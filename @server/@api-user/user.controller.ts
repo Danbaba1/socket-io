@@ -1,47 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import {
-  getAllUsersService,
   getOneUserService,
   deleteOneUserService,
   updateOneUserPropertyValueService,
   updateUserPropertyValuesService,
-  deleteAllUserService,
-} from './user.service';
-import { success } from '../lib/helpers';
-import { ReqUser } from '../types';
-
-// const routeName = 'user';
-// const item = `${routeName}-item`;
+} from './user.service.js';
+import { success } from '../lib/helpers/index.js';
+import { ReqUser } from '../types/index.js';
+import { UserDocument } from '../@api-user/user.model.js'; // Changed from IUser to UserDocument
 
 let response: { [key: string]: unknown } = {};
-
-export const getAllUsersController = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const users = await getAllUsersService();
-    response = {
-      success: true,
-      data: {
-        count: users.length,
-        users: users.map(user => {
-          return {
-            _id: user._id,
-            email: user.email,
-            email_verified: user.email_verified,
-            role: user.role,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
-          }
-        })
-      },
-      message: `SUCCESS: All users succesfully retrieved`,
-    };
-    success(`SUCCESS: All users succesfully retrieved`);
-    return res.status(200).json(response);
-
-  } catch (err) {
-    next(err);
-  }
-}
 
 export const getOneUserController = async (req: ReqUser, res: Response, next: NextFunction) => {
   try {
@@ -132,21 +100,3 @@ export const updateUserPropertyValuesController = async (req: ReqUser, res: Resp
     next(err);
   }
 }
-
-//------------------------------------------------------------------------------------------//
-export const deleteAllUserController = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const user = await deleteAllUserService();
-    const response = {
-      success: true,
-      data: {},
-      message: `${user.deletedCount} user(s) deleted successfully!`,
-    };
-    success(response.message);
-    return res.status(201).json(response);
-
-  } catch (err) {
-    next(err);
-  }
-};
-//------------------------------------------------------------------------------------------//

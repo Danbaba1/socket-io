@@ -1,20 +1,20 @@
 import {Strategy} from 'passport-local';
-import { UserModel as User } from '../../../@api-user/user.model';
-import { DoneCallback } from 'passport';
-import { success } from '../../../lib/helpers';
-import bcrypt from 'bcrypt';
+import { UserModel as User } from '../../../@api-user/user.model.js';
+import { success } from '../../../lib/helpers/index.js';
+import { Request } from 'express';
 
 export const localSignupStrategy = new Strategy(
   {
     usernameField: 'email',
     passwordField: 'password',
-    passReqToCallback: false,
+    passReqToCallback: true,
   },
-  async (email: string, password: string, done: (error: any, user?: any, info?: any) => void) =>{
+  async (req: Request, email: string, password: string, done: (error: any, user?: any, info?: any) => void) =>{
     try {
       const createUser = new User({
         email: email,
         password: password,
+        username: req.body.username,
       });
       const user = await createUser.save();
       success(`${email} just signed up`);
